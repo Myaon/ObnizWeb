@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hello, WebVR! • A-Frame</title>
+  <meta name="description" content="Hello, WebVR! • A-Frame">
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+</head>
+
+<body>
+<a-scene>
+  <!--背景画像-->
+  <a-sky src="https://aframe.io/aframe/examples/boilerplate/panorama/puydesancy.jpg" rotation="0 -130 0"></a-sky>
+  <!--仮想ボタン-->
+  <a-box color="#EEEEEE" position="0 2 -3" height="2" width="2"></a-box>
+  <a-box color="#C0C0C0" position="0 2 -2.5" height="0.5" width="0.5" onclick="handlerClick(event)"
+         onmouseenter="handlerMouseEnter(event)" onmouseleave="handlerMouseLeave(event)">
+    <a-animation attribute="scale" to="-3.5 -5 2" direction="alternate" dur="2000" repeat="indefinite"
+                 easing="linear">
+    </a-animation>
+  </a-box>
+  <!--足もとのブロック-->
+  <a-box color="#99FFFF" position="0 0 0" height="2" width="2"></a-box>
+  <!--自分の視点-->
+  <a-camera>
+    <a-cursor></a-cursor>
+  </a-camera>
+</a-scene>
+
+<script src="https://unpkg.com/obniz@3.5.0/obniz.js" crossorigin="anonymous"></script>
+<script>
+  let obniz = new Obniz("0825-8880");  // obniz idを入力する
+  let connected = false;
+  obniz.onconnect =  async function () {
+    console.log("Connect obniz");
+    connected = true;
+  }
+  obniz.onclose = async function () {
+    connected = false;
+  }
+
+  async function handlerClick(event) {
+    console.log('handlerClick');
+    console.log(event);
+    event.target.object3D.position.z -= 0.5;
+
+    if (connected) {
+      obniz.display.clear();
+      obniz.display.print("3D A-Frame");
+      obniz.display.print("　↑↓");
+      obniz.display.print("obniz");
+    }
+  }
+
+  function handlerMouseEnter(event) {
+    console.log('handlerMouseEnter');
+    console.log(event);
+  }
+
+  function handlerMouseLeave(event) {
+    console.log('handlerMouseLeave');
+    console.log(event);
+  }
+</script>
+
+</body>
+
+</html>
