@@ -28,12 +28,13 @@
   </a-camera>
 </a-scene>
 
-<script src="https://unpkg.com/obniz@3.5.0/obniz.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/obniz@3.30.0/obniz.js" crossorigin="anonymous"></script>
 <script>
   let obniz = new Obniz("0825-8880");  // obniz idを入力する
   let connected = false;
   obniz.onconnect =  async function () {
     console.log("Connect obniz");
+    obniz.display.print("Connect obniz");
     connected = true;
   }
   obniz.onclose = async function () {
